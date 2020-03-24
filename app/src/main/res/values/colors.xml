@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#720D5D</color>
+    <color name="colorPrimaryDark">#4E0D3A</color>
+    <color name="colorAccent">#E30425</color>
+    <color name="badHabitColor">#B71C1C</color>
+    <color name="goodHabitColor">#1B5E20</color>
+    <color name="highPriorityColor">#EF5350</color>
+    <color name="mediumPriorityColor">#FFCA28</color>
+    <color name="lowPriorityColor">#9CCC65</color>
+</resources>

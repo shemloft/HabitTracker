@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Habit Tracker</string>
+    <string name="name_field_label">Название</string>
+    <string name="description_field_label">Описание</string>
+    <string name="priorities_spinner_label">Приоритет</string>
+    <string name="type_good">хорошая</string>
+    <string name="type_bad">плохая</string>
+    <string name="type_radio_group_label">Тип привычки</string>
+    <string name="habit_count_hint">Число повторений привычки</string>
+    <string name="habit_frequency_hint">Частота повторений в днях</string>
+    <string name="add_button_label">Добавить</string>
+    <string name="habit_editor_repeat">Повторять</string>
+    <string name="habit_editor_times_in">раз в</string>
+    <string name="habit_editor_days">дней</string>
+    <string-array name="prioritiesList">
+        <item>высокий</item>
+        <item>средний</item>
+        <item>низкий</item>
+    </string-array>
+</resources>

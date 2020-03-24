@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="habit_editor_field_top_margin">10dp</dimen>
+    <dimen name="habit_editor_label_font_size">15sp</dimen>
+    <dimen name="habit_editor_number_width">20sp</dimen>
+</resources>
