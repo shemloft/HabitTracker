@@ -1,7 +1,5 @@
 package com.example.habittracker
 
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +26,6 @@ class HabitsRecyclerViewAdapter(
     override fun getItemCount(): Int = habits.size
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        Log.e("kekeke", "binding $position")
         holder.bind(habits[position], position)
     }
 }

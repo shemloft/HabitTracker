@@ -6,7 +6,6 @@ import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.habit_layout.view.*
-import java.text.FieldPosition
 
 class HabitViewHolder(
     override val containerView: View,

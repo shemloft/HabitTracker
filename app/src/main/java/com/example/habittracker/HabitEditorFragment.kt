@@ -1,50 +1,56 @@
 package com.example.habittracker
 
-import android.app.Activity
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import com.example.habittracker.data.Constants
-import com.example.habittracker.data.Habit
-import com.example.habittracker.data.HabitType
-import com.example.habittracker.data.Priority
-import kotlinx.android.synthetic.main.activity_habit_editor.*
+import androidx.fragment.app.Fragment
+import com.example.habittracker.data.*
+import kotlinx.android.synthetic.main.habit_editor.*
 
-class HabitEditorActivity : AppCompatActivity() {
-
-    private val fieldIsEmptyErrorText = "Поле должно быть заполнено"
-    private val typeIsNotChosenErrorText = "Тип должен быть выбран"
+class HabitEditorFragment : Fragment() {
     private val prioritiesSpinnerListener = PrioritiesSpinnerListener()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_habit_editor)
+    interface OnFormFilledListener {
+        fun onFormFilled(habit: Habit, position: Int?)
+    }
+
+    private var onFormFilledListener: OnFormFilledListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onFormFilledListener = context as? OnFormFilledListener
+        if (onFormFilledListener == null) {
+            throw ClassCastException("$context must implement OnFormFilledListener")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.habit_editor, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initializeSpinner()
 
-        var toEdit = false
+        val oldHabit = arguments?.getSerializable(BundleKeys.HABIT) as? Habit?
+        val position = arguments?.getSerializable(BundleKeys.POSITION) as? Int?
 
-        if (intent.hasExtra(Constants.OLD_HABIT)) {
-            toEdit = true
-            val oldHabit = intent.getSerializableExtra(Constants.OLD_HABIT) as Habit
+        if (oldHabit != null) {
             fillFormWithCurrentHabit(oldHabit)
         }
 
         addButton.setOnClickListener {
             if (!formIsFilled())
                 return@setOnClickListener
-            val i = Intent()
             val habit = getHabitFromForm()
-            if (toEdit) {
-                i.putExtra(Constants.EDITED_HABIT, habit)
-                i.putExtra(Constants.POSITION, intent.getIntExtra(Constants.POSITION, -1))
-            } else {
-                i.putExtra(Constants.NEW_HABIT, habit)
-            }
-            setResult(Activity.RESULT_OK, i)
-            finish()
+            onFormFilledListener?.onFormFilled(habit, position)
         }
     }
 
@@ -101,7 +107,7 @@ class HabitEditorActivity : AppCompatActivity() {
 
     private fun initializeSpinner() {
         ArrayAdapter.createFromResource(
-            this,
+            this.context!!,
             R.array.prioritiesList,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -118,7 +124,7 @@ class HabitEditorActivity : AppCompatActivity() {
             typeRadioGroupLabel.error = null
             return true
         }
-        typeRadioGroupLabel.error = typeIsNotChosenErrorText
+        typeRadioGroupLabel.error = Errors.TYPE_IS_NOT_CHOSEN
         return false
     }
 
@@ -126,8 +132,7 @@ class HabitEditorActivity : AppCompatActivity() {
         val text = input.text
         if (text != null && text.isNotEmpty())
             return true
-        input.error = fieldIsEmptyErrorText
+        input.error = Errors.FIELD_IS_EMPTY
         return false
     }
-
 }
