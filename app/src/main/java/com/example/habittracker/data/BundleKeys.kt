@@ -4,6 +4,6 @@ class BundleKeys {
     companion object {
         const val POSITION = "position"
         const val HABIT = "habit"
-        const val HAS_POSITION = "hasPosition"
+        const val CHANGED_POSITION = "changedPosition"
     }
 }

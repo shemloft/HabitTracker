@@ -37,11 +37,15 @@ class MainActivity :
     }
 
     override fun onFormFilled(habit: Habit, position: Int?) {
+        Utils.hideKeyboard(this)
+
+        if (position == null)
+            habits.add(habit)
+        else
+            habits[position] = habit
+        val actualPosition = position ?: habits.size - 1
         val bundle = Bundle()
-        bundle.putBoolean(BundleKeys.HAS_POSITION, position != null)
-        if (position != null)
-            bundle.putInt(BundleKeys.POSITION, position)
-        bundle.putSerializable(BundleKeys.HABIT, habit)
+        bundle.putInt(BundleKeys.CHANGED_POSITION, actualPosition)
         navController?.navigate(R.id.habitsViewFragment, bundle)
     }
 }

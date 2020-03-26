@@ -2,6 +2,7 @@ package com.example.habittracker
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,29 +57,18 @@ class HabitsViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeHabitsRecyclerViewAdapter()
-        tryToAddHabit()
+        processChangedPosition()
         floatingActionButton.setOnClickListener {
             onAddClickedListener?.onAddClicked()
         }
     }
 
-    private fun tryToAddHabit() {
-        val habit = arguments?.getSerializable(BundleKeys.HABIT) as? Habit
-        val position = arguments?.getInt(BundleKeys.POSITION)
-        val hasPosition = arguments?.getBoolean(BundleKeys.HAS_POSITION)
-
-        val actualPosition = if (hasPosition != null && hasPosition) position else null
-        if (habit != null)
-            addHabit(habit, actualPosition)
-    }
-
-    private fun addHabit(habit: Habit, position: Int?) {
-        val insertPosition = position ?: habits.size
-        if (position == null)
-            habits.add(habit)
-        else
-            habits[position] = habit
-        habitsRecyclerViewAdapter.notifyItemChanged(insertPosition)
+    private fun processChangedPosition() {
+        val insertPosition = arguments?.getInt(BundleKeys.CHANGED_POSITION)
+        if (insertPosition != null) {
+            habitsRecyclerViewAdapter.notifyItemChanged(insertPosition)
+        }
+        arguments = null
     }
 
     private fun initializeHabitsRecyclerViewAdapter() {
