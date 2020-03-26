@@ -5,5 +5,6 @@ class BundleKeys {
         const val POSITION = "position"
         const val HABIT = "habit"
         const val CHANGED_POSITION = "changedPosition"
+        const val HABITS_TO_SAVE = "habitsToSave"
     }
 }

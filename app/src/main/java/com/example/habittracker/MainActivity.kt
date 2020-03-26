@@ -25,6 +25,20 @@ class MainActivity :
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable(BundleKeys.HABITS_TO_SAVE, habits)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val savedHabits = savedInstanceState.getSerializable(BundleKeys.HABITS_TO_SAVE) as? ArrayList<Habit>
+        if (savedHabits != null) {
+            habits = savedHabits
+            navController?.navigate(R.id.habitsViewFragment)
+        }
+    }
+
     override fun onAddClicked() {
         navController?.navigate(R.id.habitEditorFragment)
     }
