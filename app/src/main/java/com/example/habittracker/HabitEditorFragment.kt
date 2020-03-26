@@ -15,7 +15,7 @@ class HabitEditorFragment : Fragment() {
     private val prioritiesSpinnerListener = PrioritiesSpinnerListener()
 
     interface OnFormFilledListener {
-        fun onFormFilled(habit: Habit, position: Int?)
+        fun onFormFilled(habit: Habit, position: Int?, oldHabit: Habit?)
     }
 
     private var onFormFilledListener: OnFormFilledListener? = null
@@ -50,7 +50,7 @@ class HabitEditorFragment : Fragment() {
             if (!formIsFilled())
                 return@setOnClickListener
             val habit = getHabitFromForm()
-            onFormFilledListener?.onFormFilled(habit, position)
+            onFormFilledListener?.onFormFilled(habit, position, oldHabit)
         }
     }
 

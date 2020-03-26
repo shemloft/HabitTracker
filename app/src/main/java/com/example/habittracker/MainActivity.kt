@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity :
     AppCompatActivity(),
     HabitsViewFragment.OnAddClickedListener,
-    HabitsViewFragment.OnItemClickedListener,
-    HabitsViewFragment.HabitRepository,
+    RecyclerViewFragment.OnItemClickedListener,
+    RecyclerViewFragment.HabitRepository,
     HabitEditorFragment.OnFormFilledListener,
     NavigationView.OnNavigationItemSelectedListener {
 
@@ -64,17 +64,24 @@ class MainActivity :
         navController.navigate(R.id.habitEditorFragment, bundle)
     }
 
-    override fun onFormFilled(habit: Habit, position: Int?) {
+    override fun onFormFilled(habit: Habit, position: Int?, oldHabit: Habit?) {
         Utils.hideKeyboard(this)
-
         if (position == null)
             habits.add(habit)
         else
-            habits[position] = habit
+            habits[getPosition(position, oldHabit)] = habit
         val actualPosition = position ?: habits.size - 1
         val bundle = Bundle()
         bundle.putInt(BundleKeys.CHANGED_POSITION, actualPosition)
-        navController.navigate(R.id.habitsViewFragment, bundle)
+        val options = NavOptions.Builder().setPopUpTo(R.id.nav_graph, true).build()
+        navController.navigate(R.id.habitsViewFragment, bundle, options)
+    }
+
+    private fun getPosition(position: Int, oldHabit: Habit?): Int {
+        val indices =
+            habits.mapIndexed { index, h -> if (h.habitType == oldHabit?.habitType) index else null }
+                .filterNotNull()
+        return indices[position]
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

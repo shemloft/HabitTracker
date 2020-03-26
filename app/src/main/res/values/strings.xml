@@ -4,7 +4,9 @@
     <string name="description_field_label">Описание</string>
     <string name="priorities_spinner_label">Приоритет</string>
     <string name="type_good">хорошая</string>
+    <string name="goods">хорошие</string>
     <string name="type_bad">плохая</string>
+    <string name="bads">плохие</string>
     <string name="type_radio_group_label">Тип привычки</string>
     <string name="habit_count_hint">Число повторений привычки</string>
     <string name="habit_frequency_hint">Частота повторений в днях</string>
