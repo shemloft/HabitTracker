@@ -27,4 +27,11 @@
             android:id="@+id/action_finish_editing_habit"
             app:destination="@id/habitsViewFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/appInfoFragment"
+        android:name="com.example.habittracker.AppInfoFragment"
+        tools:layout="@layout/info">
+
+    </fragment>
 </navigation>

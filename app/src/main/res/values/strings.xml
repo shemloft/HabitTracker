@@ -12,6 +12,9 @@
     <string name="habit_editor_repeat">Повторять</string>
     <string name="habit_editor_times_in">раз в</string>
     <string name="habit_editor_days">дней</string>
+    <string name="home_screen_name">Домашний экран</string>
+    <string name="info_screen_name">Информация</string>
+    <string name="info">Трекер привычек</string>
     <string-array name="prioritiesList">
         <item>высокий</item>
         <item>средний</item>
