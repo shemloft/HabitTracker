@@ -68,15 +68,8 @@ class MainActivity :
         navController.navigate(R.id.habitEditorFragment, bundle)
     }
 
-    override fun onFormFilled(habit: Habit, position: Int?, oldHabit: Habit?) {
+    override fun onFormFilled() {
         this.hideKeyboard()
-        if (position == null) {
-            Model.addHabit(habit)
-        } else {
-            if (oldHabit == null)
-                throw IllegalArgumentException("there should be old habit")
-            Model.replaceHabit(position, oldHabit, habit)
-        }
         val options = NavOptions.Builder().setPopUpTo(R.id.nav_graph, true).build()
         navController.navigate(R.id.habitsViewFragment, null, options)
     }

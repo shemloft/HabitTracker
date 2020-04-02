@@ -9,23 +9,30 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.habittracker.data.*
+import com.example.habittracker.viewmodel.EditorViewModel
 import kotlinx.android.synthetic.main.habit_editor.*
 
 class HabitEditorFragment : Fragment() {
     private val prioritiesSpinnerListener = PrioritiesSpinnerListener()
 
+    private lateinit var viewModel: EditorViewModel
+
     interface OnFormFilledListener {
-        fun onFormFilled(habit: Habit, position: Int?, oldHabit: Habit?)
+        fun onFormFilled()
     }
 
-    private var onFormFilledListener: OnFormFilledListener? = null
+    private lateinit var onFormFilledListener: OnFormFilledListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        onFormFilledListener = context as? OnFormFilledListener
-        if (onFormFilledListener == null) {
-            throw ClassCastException("$context must implement OnFormFilledListener")
-        }
+        val contextAsOnFormFilledListener = context as? OnFormFilledListener
+            ?: throw ClassCastException("$context must implement OnFormFilledListener")
+        onFormFilledListener = contextAsOnFormFilledListener
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = EditorViewModel()
     }
 
     override fun onCreateView(
@@ -50,7 +57,8 @@ class HabitEditorFragment : Fragment() {
             if (!formIsFilled())
                 return@setOnClickListener
             val habit = getHabitFromForm()
-            onFormFilledListener?.onFormFilled(habit, position, oldHabit)
+            viewModel.onFormFilled(habit, position, oldHabit)
+            onFormFilledListener.onFormFilled()
         }
     }
 

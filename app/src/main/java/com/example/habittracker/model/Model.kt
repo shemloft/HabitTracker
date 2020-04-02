@@ -6,8 +6,6 @@ import com.example.habittracker.data.HabitType
 object Model {
     private val habits = arrayListOf<Habit>()
 
-    fun getHabits() = habits
-
     fun addHabit(habit: Habit) {
         habits.add(habit)
     }
