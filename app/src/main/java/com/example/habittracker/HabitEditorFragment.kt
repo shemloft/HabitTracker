@@ -68,9 +68,9 @@ class HabitEditorFragment : Fragment() {
         habitCountTextField.setText(habit.habitCount.toString())
         habitFrequencyTextField.setText(habit.habitFrequency.toString())
         prioritiesSpinner.setSelection(
-            getIndexInSpinner(habit.priority.visibleValue())
+            getIndexInSpinner(habit.priority.visibleValue)
         )
-        typeRadioGroup.check(habit.habitType.buttonId())
+        typeRadioGroup.check(habit.habitType.buttonId)
     }
 
     private fun getIndexInSpinner(valueToFind: String): Int {
@@ -91,9 +91,9 @@ class HabitEditorFragment : Fragment() {
             .getStringArray(R.array.prioritiesList)[prioritiesSpinnerListener.currentPosition]
             .toString()
         val priority = Priority.values()
-            .first { priority -> priority.visibleValue() == priorityVisibleValue }
+            .first { priority -> priority.visibleValue == priorityVisibleValue }
         val habitType = HabitType.values()
-            .first { habitType -> typeRadioGroup.checkedRadioButtonId == habitType.buttonId() }
+            .first { habitType -> typeRadioGroup.checkedRadioButtonId == habitType.buttonId }
 
         return Habit(
             name,

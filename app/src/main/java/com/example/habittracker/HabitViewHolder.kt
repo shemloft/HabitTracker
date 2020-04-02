@@ -25,8 +25,8 @@ class HabitViewHolder(
         habitName.text = habit.name
         habitDescription.text = habit.description
         habitRepetition.text = HabitUtils.getRepetitionString(habit)
-        habitType.setImageResource(habit.habitType.iconResource())
-        habitPriority.setImageResource(habit.priority.iconResource())
+        habitType.setImageResource(habit.habitType.iconResource)
+        habitPriority.setImageResource(habit.priority.iconResource)
 
         habitLayout.setOnClickListener {
             itemClick(habit, position)

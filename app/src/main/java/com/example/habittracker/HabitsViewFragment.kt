@@ -37,7 +37,7 @@ class HabitsViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(tab_layout, pager) { tab, position ->
-            tab.text = resources.getString(HabitType.values()[position].stringId())
+            tab.text = resources.getString(HabitType.values()[position].stringId)
         }.attach()
 
         floatingActionButton.setOnClickListener {
