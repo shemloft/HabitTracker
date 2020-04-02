@@ -1,18 +1,17 @@
 package com.example.habittracker
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.habittracker.data.BundleKeys
 import com.example.habittracker.data.Habit
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity :
@@ -20,10 +19,11 @@ class MainActivity :
     HabitsViewFragment.OnAddClickedListener,
     RecyclerViewFragment.OnItemClickedListener,
     RecyclerViewFragment.HabitRepository,
-    HabitEditorFragment.OnFormFilledListener,
-    NavigationView.OnNavigationItemSelectedListener {
+    HabitEditorFragment.OnFormFilledListener {
 
     private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     private var habits = arrayListOf<Habit>()
 
     override fun getHabits(): ArrayList<Habit> = habits
@@ -32,10 +32,24 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        setupActionBarWithNavController(navController, drawerLayout)
+        navController = findNavController(R.id.nav_host_fragment)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.habitsViewFragment, R.id.appInfoFragment),
+            drawerLayout
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        navView.setNavigationItemSelectedListener(this)
+    }
+
+    override fun onSupportNavigateUp() =
+        navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -82,46 +96,5 @@ class MainActivity :
             habits.mapIndexed { index, h -> if (h.habitType == oldHabit?.habitType) index else null }
                 .filterNotNull()
         return indices[position]
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> {
-                val options = NavOptions.Builder().setPopUpTo(R.id.nav_graph, true).build()
-                navController.navigate(R.id.habitsViewFragment, null, options)
-            }
-
-            R.id.nav_info -> {
-                if (isValidDestination(R.id.appInfoFragment))
-                    navController.navigate(R.id.appInfoFragment)
-            }
-        }
-        tryToCloseDrawer()
-        return true
-    }
-
-    private fun isValidDestination(destination: Int): Boolean {
-        return destination != navController.currentDestination?.id
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                tryToCloseDrawer()
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, drawerLayout)
-    }
-
-    private fun tryToCloseDrawer(): Boolean {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-            return true
-        }
-        return false
     }
 }
