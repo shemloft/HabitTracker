@@ -51,7 +51,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_good_habit" />
+        app:srcCompat="@drawable/ic_good_habit"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/habitPriority"
@@ -60,7 +61,8 @@
         android:layout_marginTop="@dimen/habit_editor_field_top_margin"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/habitType"
-        app:srcCompat="@drawable/ic_priority_medium" />
+        app:srcCompat="@drawable/ic_priority_medium"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
