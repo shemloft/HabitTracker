@@ -10,19 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
+import com.example.habittracker.model.Model
 import kotlinx.android.synthetic.main.recycler_view.*
 
 class RecyclerViewFragment() : Fragment() {
     private lateinit var habitsRecyclerViewAdapter: RecyclerView.Adapter<*>
     private lateinit var habitsRecyclerViewLayoutManager: RecyclerView.LayoutManager
     private lateinit var onItemClickedListener: OnItemClickedListener
-    private lateinit var habitRepository: HabitRepository
 
     private var habits = arrayListOf<Habit>()
-
-    interface HabitRepository {
-        fun getHabits(): ArrayList<Habit>
-    }
 
     interface OnItemClickedListener {
         fun onItemClicked(habit: Habit, position: Int)
@@ -45,9 +41,6 @@ class RecyclerViewFragment() : Fragment() {
         val contextAsOnItemClickedListener = context as? OnItemClickedListener
             ?: throw ClassCastException("$context must implement OnItemClickedListener")
         onItemClickedListener = contextAsOnItemClickedListener
-
-        habitRepository = context as? HabitRepository
-            ?: throw ClassCastException("$context must implement HabitRepository")
     }
 
     override fun onCreateView(
@@ -60,7 +53,7 @@ class RecyclerViewFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val habitType = arguments?.getSerializable(HABIT_TYPE) as? HabitType
             ?: throw IllegalArgumentException("Should have habitType argument")
-        habits = ArrayList(habitRepository.getHabits().filter { habit -> habit.habitType == habitType })
+        habits = ArrayList(Model.getHabits(habitType))
         initializeHabitsRecyclerViewAdapter()
     }
 
