@@ -67,19 +67,8 @@ class HabitEditorFragment : Fragment() {
         descriptionTextField.setText(habit.description)
         habitCountTextField.setText(habit.habitCount.toString())
         habitFrequencyTextField.setText(habit.habitFrequency.toString())
-        prioritiesSpinner.setSelection(
-            getIndexInSpinner(habit.priority.visibleValue)
-        )
+        prioritiesSpinner.setSelection(habit.priority.ordinal)
         typeRadioGroup.check(habit.habitType.buttonId)
-    }
-
-    private fun getIndexInSpinner(valueToFind: String): Int {
-        val arr = resources.getStringArray(R.array.prioritiesList)
-        for ((index, value) in arr.withIndex()) {
-            if (value.toString() == valueToFind)
-                return index
-        }
-        throw java.lang.IllegalArgumentException("Unknown value: $valueToFind")
     }
 
     private fun getHabitFromForm(): Habit {
@@ -87,11 +76,7 @@ class HabitEditorFragment : Fragment() {
         val description = descriptionTextField.text.toString()
         val habitCount = habitCountTextField.text.toString().toInt()
         val habitFrequency = habitFrequencyTextField.text.toString().toInt()
-        val priorityVisibleValue = resources
-            .getStringArray(R.array.prioritiesList)[prioritiesSpinnerListener.currentPosition]
-            .toString()
-        val priority = Priority.values()
-            .first { priority -> priority.visibleValue == priorityVisibleValue }
+        val priority = Priority.values()[prioritiesSpinnerListener.currentPosition]
         val habitType = HabitType.values()
             .first { habitType -> typeRadioGroup.checkedRadioButtonId == habitType.buttonId }
 
@@ -106,10 +91,10 @@ class HabitEditorFragment : Fragment() {
     }
 
     private fun initializeSpinner() {
-        ArrayAdapter.createFromResource(
+        ArrayAdapter(
             this.context!!,
-            R.array.prioritiesList,
-            android.R.layout.simple_spinner_item
+            android.R.layout.simple_spinner_item,
+            Priority.values().map { priority -> getString(priority.stringId) }
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             prioritiesSpinner.adapter = adapter
