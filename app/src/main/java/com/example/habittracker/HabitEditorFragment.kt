@@ -39,8 +39,8 @@ class HabitEditorFragment : Fragment() {
 
         initializeSpinner()
 
-        val oldHabit = arguments?.getSerializable(BundleKeys.HABIT) as? Habit?
-        val position = arguments?.getSerializable(BundleKeys.POSITION) as? Int?
+        val oldHabit = arguments?.getSerializable(MainActivity.HABIT) as? Habit?
+        val position = arguments?.getSerializable(MainActivity.POSITION) as? Int?
 
         if (oldHabit != null) {
             fillFormWithCurrentHabit(oldHabit)
@@ -124,7 +124,7 @@ class HabitEditorFragment : Fragment() {
             typeRadioGroupLabel.error = null
             return true
         }
-        typeRadioGroupLabel.error = Errors.TYPE_IS_NOT_CHOSEN
+        typeRadioGroupLabel.error = getString(R.string.type_is_not_chosen)
         return false
     }
 
@@ -132,7 +132,7 @@ class HabitEditorFragment : Fragment() {
         val text = input.text
         if (text != null && text.isNotEmpty())
             return true
-        input.error = Errors.FIELD_IS_EMPTY
+        input.error = getString(R.string.field_is_empty)
         return false
     }
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habittracker.data.BundleKeys
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
 import kotlinx.android.synthetic.main.recycler_view.*
@@ -30,9 +29,11 @@ class RecyclerViewFragment() : Fragment() {
     }
 
     companion object {
+        const val HABIT_TYPE = "habitType"
+
         fun newInstance(habitType: HabitType): RecyclerViewFragment {
             val bundle = Bundle()
-            bundle.putSerializable(BundleKeys.HABIT_TYPE, habitType)
+            bundle.putSerializable(HABIT_TYPE, habitType)
             return RecyclerViewFragment().apply {
                 arguments = bundle
             }
@@ -57,7 +58,7 @@ class RecyclerViewFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val habitType = arguments?.getSerializable(BundleKeys.HABIT_TYPE) as? HabitType
+        val habitType = arguments?.getSerializable(HABIT_TYPE) as? HabitType
             ?: throw IllegalArgumentException("Should have habitType argument")
         habits = ArrayList(habitRepository.getHabits().filter { habit -> habit.habitType == habitType })
         initializeHabitsRecyclerViewAdapter()

@@ -17,6 +17,8 @@
     <string name="home_screen_name">Домашний экран</string>
     <string name="info_screen_name">Информация</string>
     <string name="info">Трекер привычек</string>
+    <string name="field_is_empty">Поле должно быть заполнено</string>
+    <string name="type_is_not_chosen">Тип должен быть выбран</string>
     <string-array name="prioritiesList">
         <item>высокий</item>
         <item>средний</item>
