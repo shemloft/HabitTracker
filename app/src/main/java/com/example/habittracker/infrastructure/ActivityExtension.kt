@@ -1,4 +1,4 @@
-package com.example.habittracker
+package com.example.habittracker.infrastructure
 
 import android.app.Activity
 import android.view.View

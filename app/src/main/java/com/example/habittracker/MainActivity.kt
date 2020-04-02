@@ -11,14 +11,17 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.habittracker.data.Habit
-import com.example.habittracker.model.Model
+import com.example.habittracker.infrastructure.hideKeyboard
+import com.example.habittracker.ui.editor.EditorFragment
+import com.example.habittracker.ui.habits.HabitsViewFragment
+import com.example.habittracker.ui.habits.RecyclerViewFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity :
     AppCompatActivity(),
     HabitsViewFragment.OnAddClickedListener,
     RecyclerViewFragment.OnItemClickedListener,
-    HabitEditorFragment.OnFormFilledListener {
+    EditorFragment.OnFormFilledListener {
 
     companion object {
         const val POSITION = "position"

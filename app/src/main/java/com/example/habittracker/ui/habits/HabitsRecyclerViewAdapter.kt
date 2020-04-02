@@ -1,8 +1,9 @@
-package com.example.habittracker
+package com.example.habittracker.ui.habits
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habittracker.R
 import com.example.habittracker.data.Habit
 
 

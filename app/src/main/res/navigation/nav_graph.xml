@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/habitsViewFragment"
-        android:name="com.example.habittracker.HabitsViewFragment"
+        android:name="com.example.habittracker.ui.habits.HabitsViewFragment"
         tools:layout="@layout/habits_view" />
 
     <fragment
         android:id="@+id/habitEditorFragment"
-        android:name="com.example.habittracker.HabitEditorFragment"
+        android:name="com.example.habittracker.ui.editor.EditorFragment"
         tools:layout="@layout/habit_editor"/>
 
 
     <fragment
         android:id="@+id/appInfoFragment"
-        android:name="com.example.habittracker.AppInfoFragment"
+        android:name="com.example.habittracker.ui.info.AppInfoFragment"
         tools:layout="@layout/info"/>
 
 </navigation>

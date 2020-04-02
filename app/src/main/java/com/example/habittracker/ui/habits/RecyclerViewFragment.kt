@@ -1,4 +1,4 @@
-package com.example.habittracker
+package com.example.habittracker.ui.habits
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habittracker.R
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
 import com.example.habittracker.model.Model
@@ -36,6 +37,10 @@ class RecyclerViewFragment() : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val contextAsOnItemClickedListener = context as? OnItemClickedListener
@@ -58,9 +63,10 @@ class RecyclerViewFragment() : Fragment() {
     }
 
     private fun initializeHabitsRecyclerViewAdapter() {
-        habitsRecyclerViewAdapter = HabitsRecyclerViewAdapter(habits) { habit, position ->
-            onItemClickedListener.onItemClicked(habit, position)
-        }
+        habitsRecyclerViewAdapter =
+            HabitsRecyclerViewAdapter(habits) { habit, position ->
+                onItemClickedListener.onItemClicked(habit, position)
+            }
         habitsRecyclerViewLayoutManager = LinearLayoutManager(this.context)
 
         habitsRecyclerView.adapter = habitsRecyclerViewAdapter

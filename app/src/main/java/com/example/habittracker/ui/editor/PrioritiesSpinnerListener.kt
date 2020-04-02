@@ -1,4 +1,4 @@
-package com.example.habittracker
+package com.example.habittracker.ui.editor
 
 import android.view.View
 import android.widget.AdapterView

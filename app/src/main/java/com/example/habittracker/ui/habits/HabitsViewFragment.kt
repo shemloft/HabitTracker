@@ -1,4 +1,4 @@
-package com.example.habittracker
+package com.example.habittracker.ui.habits
 
 import android.content.Context
 import android.os.Bundle
@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.habittracker.R
 import com.example.habittracker.data.HabitType
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.habits_view.*
 
 class HabitsViewFragment : Fragment() {
 
-    private var onAddClickedListener: OnAddClickedListener? = null
-
+    private lateinit var onAddClickedListener: OnAddClickedListener
 
     interface OnAddClickedListener {
         fun onAddClicked()
@@ -21,10 +21,9 @@ class HabitsViewFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        onAddClickedListener = context as? OnAddClickedListener
-        if (onAddClickedListener == null) {
-            throw ClassCastException("$context must implement OnAddClickedListener")
-        }
+        val contextAsOnAddClickedListener = context as? OnAddClickedListener
+            ?: throw ClassCastException("$context must implement OnAddClickedListener")
+        onAddClickedListener = contextAsOnAddClickedListener
     }
 
     override fun onCreateView(
@@ -41,7 +40,7 @@ class HabitsViewFragment : Fragment() {
         }.attach()
 
         floatingActionButton.setOnClickListener {
-            onAddClickedListener?.onAddClicked()
+            onAddClickedListener.onAddClicked()
         }
     }
 }

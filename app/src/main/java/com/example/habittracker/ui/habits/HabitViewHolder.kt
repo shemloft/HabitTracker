@@ -1,7 +1,8 @@
-package com.example.habittracker
+package com.example.habittracker.ui.habits
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habittracker.R
 import com.example.habittracker.data.Habit
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.habit_layout.*
