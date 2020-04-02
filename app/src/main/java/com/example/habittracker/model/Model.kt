@@ -6,6 +6,8 @@ import com.example.habittracker.data.HabitType
 object Model {
     private val habits = arrayListOf<Habit>()
 
+    fun getHabits(): List<Habit> = habits
+
     fun addHabit(habit: Habit) {
         habits.add(habit)
     }
@@ -19,5 +21,6 @@ object Model {
         habits.mapIndexed { index, habit -> if (habit.habitType == habitType) index else null }
             .filterNotNull()
 
-    fun getHabits(habitType: HabitType) = habits.filter { habit -> habit.habitType == habitType }
+    fun getHabits(habitType: HabitType): List<Habit> =
+        habits.filter { habit -> habit.habitType == habitType }
 }

@@ -8,10 +8,15 @@ import com.example.habittracker.data.Habit
 
 
 class HabitsRecyclerViewAdapter(
-    private val habits: ArrayList<Habit>,
+    private var habits: List<Habit>,
     private val itemClick: ((Habit, Int) -> Unit)
 ) :
     RecyclerView.Adapter<HabitViewHolder>() {
+
+    fun updateHabits(newHabits: List<Habit>) {
+        habits = newHabits
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val inflater = LayoutInflater.from(parent.context)
