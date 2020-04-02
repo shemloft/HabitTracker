@@ -3,7 +3,6 @@ package com.example.habittracker
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.data.Habit
-import com.example.habittracker.data.HabitUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.habit_layout.view.*
 
@@ -24,7 +23,19 @@ class HabitViewHolder(
     fun bind(habit: Habit, position: Int) {
         habitName.text = habit.name
         habitDescription.text = habit.description
-        habitRepetition.text = HabitUtils.getRepetitionString(habit)
+        habitRepetition.text = containerView.context.getString(
+            R.string.habitRepetition,
+            containerView.context.resources.getQuantityString(
+                R.plurals.timesPlurals,
+                habit.habitCount,
+                habit.habitCount
+            ),
+            containerView.context.resources.getQuantityString(
+                R.plurals.daysPlurals,
+                habit.habitFrequency,
+                habit.habitFrequency
+            )
+        )
         habitType.setImageResource(habit.habitType.iconResource)
         habitPriority.setImageResource(habit.priority.iconResource)
 

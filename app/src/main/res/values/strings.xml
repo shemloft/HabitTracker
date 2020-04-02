@@ -19,9 +19,19 @@
     <string name="info">Трекер привычек</string>
     <string name="field_is_empty">Поле должно быть заполнено</string>
     <string name="type_is_not_chosen">Тип должен быть выбран</string>
+    <string name="habitRepetition">%1$s в %2$s</string>
     <string-array name="prioritiesList">
         <item>высокий</item>
         <item>средний</item>
         <item>низкий</item>
     </string-array>
+    <plurals name="timesPlurals">
+        <item quantity="few">%1$d раза</item>
+        <item quantity="other">%1$d раз</item>
+    </plurals>
+    <plurals name="daysPlurals">
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дня</item>
+        <item quantity="other">%1$d дней</item>
+    </plurals>
 </resources>
