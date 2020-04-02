@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.data.Habit
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.habit_layout.view.*
+import kotlinx.android.synthetic.main.habit_layout.*
 
 class HabitViewHolder(
     override val containerView: View,
@@ -12,13 +12,6 @@ class HabitViewHolder(
 ) :
     RecyclerView.ViewHolder(containerView),
     LayoutContainer {
-    private val habitName = containerView.habitName
-    private val habitDescription = containerView.habitDescription
-    private val habitRepetition = containerView.habitRepetition
-    private val habitType = containerView.habitType
-    private val habitPriority = containerView.habitPriority
-
-    private val habitLayout = containerView.habitLayout
 
     fun bind(habit: Habit, position: Int) {
         habitName.text = habit.name

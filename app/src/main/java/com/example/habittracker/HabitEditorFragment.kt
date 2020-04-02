@@ -71,28 +71,18 @@ class HabitEditorFragment : Fragment() {
         typeRadioGroup.check(habit.habitType.buttonId)
     }
 
-    private fun getHabitFromForm(): Habit {
-        val name = nameTextField.text.toString()
-        val description = descriptionTextField.text.toString()
-        val habitCount = habitCountTextField.text.toString().toInt()
-        val habitFrequency = habitFrequencyTextField.text.toString().toInt()
-        val priority = Priority.values()[prioritiesSpinnerListener.currentPosition]
-        val habitType = HabitType.values()
-            .first { habitType -> typeRadioGroup.checkedRadioButtonId == habitType.buttonId }
-
-        return Habit(
-            name,
-            description,
-            priority,
-            habitType,
-            habitCount,
-            habitFrequency
-        )
-    }
+    private fun getHabitFromForm() = Habit(
+        name = nameTextField.text.toString(),
+        description = descriptionTextField.text.toString(),
+        habitCount = habitCountTextField.text.toString().toInt(),
+        habitFrequency = habitFrequencyTextField.text.toString().toInt(),
+        priority = Priority.values()[prioritiesSpinnerListener.currentPosition],
+        habitType = HabitType.values()
+            .first { habitType -> typeRadioGroup.checkedRadioButtonId == habitType.buttonId })
 
     private fun initializeSpinner() {
         ArrayAdapter(
-            this.context!!,
+            this.context as Context,
             android.R.layout.simple_spinner_item,
             Priority.values().map { priority -> getString(priority.stringId) }
         ).also { adapter ->

@@ -1,5 +1,6 @@
 package com.example.habittracker
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -84,7 +85,7 @@ class MainActivity :
     }
 
     override fun onFormFilled(habit: Habit, position: Int?, oldHabit: Habit?) {
-        Utils.hideKeyboard(this)
+        this.hideKeyboard()
         if (position == null)
             habits.add(habit)
         else
