@@ -19,8 +19,8 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="@dimen/bottom_sheet_item_height"/>
+            android:layout_marginBottom="@dimen/bottom_sheet_item_height"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -29,9 +29,9 @@
         android:name="com.example.habittracker.ui.bottomsheet.BottomSheetFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:behavior_peekHeight="@dimen/bottom_sheet_item_height"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        />
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

@@ -22,6 +22,10 @@ object Model {
 
     fun getImmutableHabits(habitType: HabitType): List<Habit> = getHabits(habitType)
 
+//    fun getSortedByPriorityHabits(habitType: HabitType, descending: Boolean = true): List<Habit> {
+//        return getHabits(habitType).sortBy { habit -> habit.habitType }
+//    }
+
     private fun getHabits(habitType: HabitType) = when (habitType) {
         HabitType.Good -> goodHabits
         HabitType.Bad -> badHabits
