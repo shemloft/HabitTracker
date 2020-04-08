@@ -4,23 +4,26 @@ import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
 
 object Model {
-    private val habits = arrayListOf<Habit>()
-
-    fun getHabits(): List<Habit> = habits
+    private val goodHabits = arrayListOf<Habit>()
+    private val badHabits = arrayListOf<Habit>()
 
     fun addHabit(habit: Habit) {
-        habits.add(habit)
+        getHabits(habit.habitType).add(habit)
     }
 
-    fun replaceHabit(relativePosition: Int, oldHabit: Habit, newHabit: Habit) {
-        val actualPosition = getHabitsIndexes(oldHabit.habitType)[relativePosition]
-        habits[actualPosition] = newHabit
+    fun replaceHabit(position: Int, oldHabit: Habit, newHabit: Habit) {
+        if (oldHabit.habitType != newHabit.habitType) {
+            getHabits(oldHabit.habitType).removeAt(position)
+            addHabit(newHabit)
+        } else {
+            getHabits(newHabit.habitType)[position] = newHabit
+        }
     }
 
-    private fun getHabitsIndexes(habitType: HabitType) =
-        habits.mapIndexed { index, habit -> if (habit.habitType == habitType) index else null }
-            .filterNotNull()
+    fun getImmutableHabits(habitType: HabitType): List<Habit> = getHabits(habitType)
 
-    fun getHabits(habitType: HabitType): List<Habit> =
-        habits.filter { habit -> habit.habitType == habitType }
+    private fun getHabits(habitType: HabitType) = when (habitType) {
+        HabitType.Good -> goodHabits
+        HabitType.Bad -> badHabits
+    }
 }

@@ -13,10 +13,10 @@ class HabitsViewModel : ViewModel() {
     val habits: LiveData<List<Habit>> = mutableHabits
 
     init {
-        mutableHabits.value = Model.getHabits()
+        mutableHabits.value = Model.getImmutableHabits(HabitType.Good)
     }
 
     fun onHabitTypeChanged(habitType: HabitType){
-        mutableHabits.value = Model.getHabits(habitType)
+        mutableHabits.value = Model.getImmutableHabits(habitType)
     }
 }
