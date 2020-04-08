@@ -8,10 +8,11 @@ import com.example.habittracker.data.Habit
 
 
 class HabitsRecyclerViewAdapter(
-    private var habits: List<Habit>,
     private val itemClick: ((Habit, Int) -> Unit)
 ) :
     RecyclerView.Adapter<HabitViewHolder>() {
+
+    private var habits = listOf<Habit>()
 
     fun updateHabits(newHabits: List<Habit>) {
         habits = newHabits

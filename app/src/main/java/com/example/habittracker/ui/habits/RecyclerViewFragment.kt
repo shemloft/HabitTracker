@@ -2,10 +2,12 @@ package com.example.habittracker.ui.habits
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,14 +21,12 @@ import com.example.habittracker.viewmodel.EditorViewModel
 import com.example.habittracker.viewmodel.HabitsViewModel
 import kotlinx.android.synthetic.main.recycler_view.*
 
-class RecyclerViewFragment() : Fragment() {
+class RecyclerViewFragment : Fragment() {
     private lateinit var habitsRecyclerViewAdapter: HabitsRecyclerViewAdapter
     private lateinit var habitsRecyclerViewLayoutManager: RecyclerView.LayoutManager
     private lateinit var onItemClickedListener: OnItemClickedListener
 
-    private lateinit var viewModel: HabitsViewModel
-
-    private var habits = listOf<Habit>()
+    private val viewModel: HabitsViewModel by activityViewModels()
 
     interface OnItemClickedListener {
         fun onItemClicked(habit: Habit, position: Int)
@@ -42,15 +42,6 @@ class RecyclerViewFragment() : Fragment() {
                 arguments = bundle
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HabitsViewModel() as T
-            }
-        }).get(HabitsViewModel::class.java)
     }
 
     override fun onAttach(context: Context) {
@@ -70,17 +61,23 @@ class RecyclerViewFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val habitType = arguments?.getSerializable(HABIT_TYPE) as? HabitType
             ?: throw IllegalArgumentException("Should have habitType argument")
-        viewModel.onHabitTypeChanged(habitType)
-        viewModel.habits.observe(
-            viewLifecycleOwner,
-            Observer { habits -> habitsRecyclerViewAdapter.updateHabits(habits) })
+
+        val observable = when (habitType) {
+            HabitType.Good -> viewModel.goodHabits
+            HabitType.Bad -> viewModel.badHabits
+        }
+
+        observable.observe(viewLifecycleOwner,
+            Observer { habits ->
+                habitsRecyclerViewAdapter.updateHabits(habits)
+            })
+
         initializeHabitsRecyclerViewAdapter()
     }
 
-
     private fun initializeHabitsRecyclerViewAdapter() {
         habitsRecyclerViewAdapter =
-            HabitsRecyclerViewAdapter(habits) { habit, position ->
+            HabitsRecyclerViewAdapter { habit, position ->
                 onItemClickedListener.onItemClicked(habit, position)
             }
         habitsRecyclerViewLayoutManager = LinearLayoutManager(this.context)

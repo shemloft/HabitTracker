@@ -8,15 +8,14 @@ import com.example.habittracker.data.HabitType
 import com.example.habittracker.model.Model
 
 class HabitsViewModel : ViewModel() {
-    private val mutableHabits: MutableLiveData<List<Habit>> = MutableLiveData()
+    private val goodHabitsMutable: MutableLiveData<List<Habit>> = MutableLiveData()
+    private val badHabitsMutable: MutableLiveData<List<Habit>> = MutableLiveData()
 
-    val habits: LiveData<List<Habit>> = mutableHabits
+    val goodHabits: LiveData<List<Habit>> = goodHabitsMutable
+    val badHabits: LiveData<List<Habit>> = badHabitsMutable
 
     init {
-        mutableHabits.value = Model.getImmutableHabits(HabitType.Good)
-    }
-
-    fun onHabitTypeChanged(habitType: HabitType){
-        mutableHabits.value = Model.getImmutableHabits(habitType)
+        goodHabitsMutable.value = Model.getImmutableHabits(HabitType.Good)
+        badHabitsMutable.value = Model.getImmutableHabits(HabitType.Bad)
     }
 }

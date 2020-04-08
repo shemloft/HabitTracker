@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.habittracker.MainActivity
 import com.example.habittracker.R
-import com.example.habittracker.data.*
+import com.example.habittracker.data.Habit
+import com.example.habittracker.data.HabitType
+import com.example.habittracker.data.Priority
 import com.example.habittracker.viewmodel.EditorViewModel
 import kotlinx.android.synthetic.main.habit_editor.*
 
@@ -35,7 +39,11 @@ class EditorFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = EditorViewModel()
+        viewModel =  ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return EditorViewModel() as T
+            }
+        }).get(EditorViewModel::class.java)
     }
 
     override fun onCreateView(
