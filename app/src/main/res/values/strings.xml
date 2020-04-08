@@ -23,6 +23,9 @@
     <string name="high_priority">высокий</string>
     <string name="medium_priority">средний</string>
     <string name="low_priority">низкий</string>
+    <string name="bottom_sheet_header">Фильтры и сортировки</string>
+    <string name="sort_by_priority">Сортировать по приоритету</string>
+    <string name="search_field_hint">Поиск</string>
     <plurals name="timesPlurals">
         <item quantity="few">%1$d раза</item>
         <item quantity="other">%1$d раз</item>

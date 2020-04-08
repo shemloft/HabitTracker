@@ -3,4 +3,6 @@
     <dimen name="habit_editor_field_top_margin">10dp</dimen>
     <dimen name="habit_editor_label_font_size">15sp</dimen>
     <dimen name="habit_editor_number_width">20sp</dimen>
+    <dimen name="bottom_sheet_item_height">60dp</dimen>
+    <dimen name="bottom_sheet_item_padding">10dp</dimen>
 </resources>

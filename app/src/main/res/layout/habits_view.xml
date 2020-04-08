@@ -31,6 +31,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_plus" />
+        app:srcCompat="@drawable/ic_plus"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

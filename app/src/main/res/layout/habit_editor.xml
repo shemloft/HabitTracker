@@ -31,6 +31,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameTextFieldLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/name_field_label"
@@ -46,6 +47,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descriptionTextFieldLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/habit_editor_field_top_margin"
@@ -155,7 +157,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_button_label"
-            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/leftGuideline"
             app:layout_constraintRight_toRightOf="@id/rightGuideline"
