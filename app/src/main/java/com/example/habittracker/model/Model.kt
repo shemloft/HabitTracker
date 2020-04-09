@@ -19,7 +19,8 @@ object Model {
     fun replaceHabit(oldHabit: Habit, newHabit: Habit) {
         newHabit.id = oldHabit.id
         database.habitsDao().updateHabit(newHabit)
+    }
 
     fun getHabits(habitType: HabitType): LiveData<List<Habit>> =
-        database.habitsDao().getHabitsByType(habitType)
+            database.habitsDao().getHabitsByType(habitType)
 }
