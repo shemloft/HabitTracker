@@ -65,26 +65,28 @@ class RecyclerViewFragment : Fragment() {
         }
 
         observable.observe(viewLifecycleOwner,
-            Observer { habits ->
-                habitsRecyclerViewAdapter.updateHabits(habits)
-                Log.e("ke", "changed: $habits")
+            Observer { _ ->
+                habitsRecyclerViewAdapter.updateHabits(viewModel.getUpdatedHabits(habitType))
             })
 
         viewModel.sortStatus.observe(viewLifecycleOwner,
-            Observer { sortStatus ->
-                val h = viewModel.getSortedHabits(habitType, sortStatus)
-                habitsRecyclerViewAdapter.updateHabits(h)
-                Log.e("ke", "sorted: $h")
+            Observer { _ ->
+                habitsRecyclerViewAdapter.updateHabits(viewModel.getUpdatedHabits(habitType))
             }
         )
+
+        viewModel.filterText.observe(viewLifecycleOwner,
+            Observer { _ ->
+                habitsRecyclerViewAdapter.updateHabits(viewModel.getUpdatedHabits(habitType))
+            })
 
         initializeHabitsRecyclerViewAdapter()
     }
 
     private fun initializeHabitsRecyclerViewAdapter() {
         habitsRecyclerViewAdapter =
-            HabitsRecyclerViewAdapter { habit, position ->
-                val actualPosition = viewModel.getPosition(position, habit.habitType)
+            HabitsRecyclerViewAdapter { habit, _ ->
+                val actualPosition = viewModel.getPosition(habit)
                 onItemClickedListener.onItemClicked(habit, actualPosition)
             }
         habitsRecyclerViewLayoutManager = LinearLayoutManager(this.context)

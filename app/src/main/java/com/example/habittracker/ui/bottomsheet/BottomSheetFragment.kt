@@ -25,7 +25,7 @@ class BottomSheetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonToggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        buttonToggleGroup.addOnButtonCheckedListener { group, _, _ ->
             val sortStatus = when (group.checkedButtonId) {
                 View.NO_ID -> SortStatus.NONE
                 R.id.buttonSortUp -> SortStatus.UP
