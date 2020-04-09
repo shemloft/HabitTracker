@@ -39,4 +39,28 @@ class HabitsViewModel : ViewModel() {
         }
     }
 
+    fun getPosition(relativePosition: Int, habitType: HabitType): Int {
+        return when (sortStatus.value) {
+            SortStatus.NONE -> relativePosition
+            SortStatus.UP -> getActualPosition(relativePosition, habitType, false)
+            SortStatus.DOWN -> getActualPosition(relativePosition, habitType, true)
+            else -> relativePosition
+        }
+    }
+
+    private fun getActualPosition(
+        relativePosition: Int,
+        habitType: HabitType,
+        descending: Boolean
+    ) : Int {
+        val habitsWithIndices = Model.getImmutableHabits(habitType)
+            .mapIndexed { index, habit -> Pair(index, habit) }
+        val sorted = if (!descending) {
+            habitsWithIndices.sortedBy { pair: Pair<Int, Habit> -> pair.second.priority }
+        } else {
+            habitsWithIndices.sortedByDescending { pair: Pair<Int, Habit> -> pair.second.priority }
+        }
+        return sorted[relativePosition].first
+    }
+
 }

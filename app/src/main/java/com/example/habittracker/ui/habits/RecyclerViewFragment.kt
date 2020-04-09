@@ -2,6 +2,7 @@ package com.example.habittracker.ui.habits
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,11 +67,14 @@ class RecyclerViewFragment : Fragment() {
         observable.observe(viewLifecycleOwner,
             Observer { habits ->
                 habitsRecyclerViewAdapter.updateHabits(habits)
+                Log.e("ke", "changed: $habits")
             })
 
         viewModel.sortStatus.observe(viewLifecycleOwner,
             Observer { sortStatus ->
-                habitsRecyclerViewAdapter.updateHabits(viewModel.getSortedHabits(habitType, sortStatus))
+                val h = viewModel.getSortedHabits(habitType, sortStatus)
+                habitsRecyclerViewAdapter.updateHabits(h)
+                Log.e("ke", "sorted: $h")
             }
         )
 
@@ -80,7 +84,8 @@ class RecyclerViewFragment : Fragment() {
     private fun initializeHabitsRecyclerViewAdapter() {
         habitsRecyclerViewAdapter =
             HabitsRecyclerViewAdapter { habit, position ->
-                onItemClickedListener.onItemClicked(habit, position)
+                val actualPosition = viewModel.getPosition(position, habit.habitType)
+                onItemClickedListener.onItemClicked(habit, actualPosition)
             }
         habitsRecyclerViewLayoutManager = LinearLayoutManager(this.context)
 
