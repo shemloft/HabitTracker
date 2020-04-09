@@ -6,14 +6,11 @@ import com.example.habittracker.model.Model
 
 class EditorViewModel: ViewModel() {
 
-    fun onFormFilled(habit: Habit, position: Int?, oldHabit: Habit?) {
-        if (position == null) {
+    fun onFormFilled(habit: Habit, oldHabit: Habit?) {
+        if (oldHabit == null)
             Model.addHabit(habit)
-        } else {
-            if (oldHabit == null)
-                throw IllegalArgumentException("there should be old habit")
-            Model.replaceHabit(position, oldHabit, habit)
-        }
+        else
+            Model.replaceHabit(oldHabit, habit)
     }
 
 }

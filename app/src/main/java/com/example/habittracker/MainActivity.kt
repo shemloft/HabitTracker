@@ -27,7 +27,6 @@ class MainActivity :
     EditorFragment.OnFormFilledListener {
 
     companion object {
-        const val POSITION = "position"
         const val HABIT = "habit"
     }
 
@@ -79,9 +78,8 @@ class MainActivity :
         navController.navigate(R.id.habitEditorFragment)
     }
 
-    override fun onItemClicked(habit: Habit, position: Int) {
+    override fun onItemClicked(habit: Habit) {
         val bundle = Bundle()
-        bundle.putInt(POSITION, position)
         bundle.putSerializable(HABIT, habit)
         navController.navigate(R.id.habitEditorFragment, bundle)
     }

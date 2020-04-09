@@ -1,13 +1,11 @@
 package com.example.habittracker.model
 
+import androidx.lifecycle.LiveData
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
 import com.example.habittracker.db.HabitsDatabase
 
 object Model {
-    private val goodHabits = arrayListOf<Habit>()
-    private val badHabits = arrayListOf<Habit>()
-
     private lateinit var database: HabitsDatabase
 
     fun addDatabase(database: HabitsDatabase) {
@@ -18,12 +16,11 @@ object Model {
         database.habitsDao().insertHabit(habit)
     }
 
-    fun replaceHabit(position: Int, oldHabit: Habit, newHabit: Habit) {
+    fun replaceHabit(oldHabit: Habit, newHabit: Habit) {
         newHabit.id = oldHabit.id
         database.habitsDao().updateHabit(newHabit)
     }
 
-    fun getImmutableHabits(habitType: HabitType): List<Habit> = getHabits(habitType)
-
-    private fun getHabits(habitType: HabitType) = database.habitsDao().getHabitsByType(habitType)
+    fun getHabits(habitType: HabitType): LiveData<List<Habit>> =
+        database.habitsDao().getHabitsByType(habitType)
 }

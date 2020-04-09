@@ -1,5 +1,6 @@
 package com.example.habittracker.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,19 +10,15 @@ import com.example.habittracker.data.SortStatus
 import com.example.habittracker.model.Model
 
 class HabitsViewModel : ViewModel() {
-    private val goodHabitsMutable: MutableLiveData<List<Habit>> = MutableLiveData()
-    private val badHabitsMutable: MutableLiveData<List<Habit>> = MutableLiveData()
     private val sortStatusMutable: MutableLiveData<SortStatus> = MutableLiveData()
     private val filterTextMutable: MutableLiveData<String> = MutableLiveData()
 
-    val goodHabits: LiveData<List<Habit>> = goodHabitsMutable
-    val badHabits: LiveData<List<Habit>> = badHabitsMutable
+    val goodHabits: LiveData<List<Habit>> = Model.getHabits(HabitType.Good)
+    val badHabits: LiveData<List<Habit>> = Model.getHabits(HabitType.Bad)
     val sortStatus: LiveData<SortStatus> = sortStatusMutable
     val filterText: LiveData<String> = filterTextMutable
 
     init {
-        goodHabitsMutable.value = Model.getImmutableHabits(HabitType.Good)
-        badHabitsMutable.value = Model.getImmutableHabits(HabitType.Bad)
         sortStatusMutable.value = SortStatus.NONE
         filterTextMutable.value = ""
     }
@@ -34,12 +31,18 @@ class HabitsViewModel : ViewModel() {
         filterTextMutable.value = newText
     }
 
-    fun getUpdatedHabits(habitType: HabitType) = getFilteredHabits(
-        getSortedHabits(
-            Model.getImmutableHabits(habitType),
-            sortStatus.value
-        ), filterText.value
-    )
+    fun getUpdatedHabits(habitType: HabitType): List<Habit> {
+        val habits = when (habitType) {
+            HabitType.Good -> goodHabits
+            HabitType.Bad -> badHabits
+        }
+        return getFilteredHabits(
+            getSortedHabits(
+                habits.value ?: listOf(),
+                sortStatus.value
+            ), filterText.value
+        )
+    }
 
     private fun getSortedHabits(habits: List<Habit>, sortStatus: SortStatus?) =
         when (sortStatus) {
@@ -50,32 +53,4 @@ class HabitsViewModel : ViewModel() {
 
     private fun getFilteredHabits(habits: List<Habit>, text: String?) =
         habits.filter { habit -> habit.name.contains(text ?: "") }
-
-    fun getPosition(habit: Habit) =
-        Model.getImmutableHabits(habit.habitType).indexOf(habit)
-
-//    fun getPosition(relativePosition: Int, habitType: HabitType): Int {
-//        return when (sortStatus.value) {
-//            SortStatus.NONE -> relativePosition
-//            SortStatus.UP -> getActualPosition(relativePosition, habitType, false)
-//            SortStatus.DOWN -> getActualPosition(relativePosition, habitType, true)
-//            else -> relativePosition
-//        }
-//    }
-
-    private fun getActualPosition(
-        relativePosition: Int,
-        habitType: HabitType,
-        descending: Boolean
-    ): Int {
-        val habitsWithIndices = Model.getImmutableHabits(habitType)
-            .mapIndexed { index, habit -> Pair(index, habit) }
-        val sorted = if (!descending) {
-            habitsWithIndices.sortedBy { pair: Pair<Int, Habit> -> pair.second.priority }
-        } else {
-            habitsWithIndices.sortedByDescending { pair: Pair<Int, Habit> -> pair.second.priority }
-        }
-        return sorted[relativePosition].first
-    }
-
 }
