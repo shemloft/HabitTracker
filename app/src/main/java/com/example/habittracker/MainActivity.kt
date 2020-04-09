@@ -10,8 +10,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.example.habittracker.data.Habit
+import com.example.habittracker.db.HabitsDatabase
 import com.example.habittracker.infrastructure.hideKeyboard
+import com.example.habittracker.model.Model
 import com.example.habittracker.ui.editor.EditorFragment
 import com.example.habittracker.ui.habits.HabitsViewFragment
 import com.example.habittracker.ui.habits.RecyclerViewFragment
@@ -24,7 +27,6 @@ class MainActivity :
     EditorFragment.OnFormFilledListener {
 
     companion object {
-        const val POSITION = "position"
         const val HABIT = "habit"
     }
 
@@ -42,6 +44,18 @@ class MainActivity :
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        if (savedInstanceState == null) {
+            val db =
+                Room.databaseBuilder(
+                    applicationContext,
+                    HabitsDatabase::class.java,
+                    "HabitsDatabase"
+                )
+                    .allowMainThreadQueries()
+                    .build()
+            Model.addDatabase(db)
+        }
     }
 
     override fun onSupportNavigateUp() =
@@ -64,9 +78,8 @@ class MainActivity :
         navController.navigate(R.id.habitEditorFragment)
     }
 
-    override fun onItemClicked(habit: Habit, position: Int) {
+    override fun onItemClicked(habit: Habit) {
         val bundle = Bundle()
-        bundle.putInt(POSITION, position)
         bundle.putSerializable(HABIT, habit)
         navController.navigate(R.id.habitEditorFragment, bundle)
     }

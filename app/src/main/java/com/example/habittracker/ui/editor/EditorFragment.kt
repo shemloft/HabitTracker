@@ -58,7 +58,6 @@ class EditorFragment : Fragment() {
         initializeSpinner()
 
         val oldHabit = arguments?.getSerializable(MainActivity.HABIT) as? Habit?
-        val position = arguments?.getSerializable(MainActivity.POSITION) as? Int?
 
         if (oldHabit != null) {
             fillFormWithCurrentHabit(oldHabit)
@@ -68,7 +67,7 @@ class EditorFragment : Fragment() {
             if (!formIsFilled())
                 return@setOnClickListener
             val habit = getHabitFromForm()
-            viewModel.onFormFilled(habit, position, oldHabit)
+            viewModel.onFormFilled(habit, oldHabit)
             onFormFilledListener.onFormFilled()
         }
     }

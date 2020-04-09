@@ -26,7 +26,7 @@ class RecyclerViewFragment : Fragment() {
     private val viewModel: HabitsViewModel by activityViewModels()
 
     interface OnItemClickedListener {
-        fun onItemClicked(habit: Habit, position: Int)
+        fun onItemClicked(habit: Habit)
     }
 
     companion object {
@@ -86,8 +86,7 @@ class RecyclerViewFragment : Fragment() {
     private fun initializeHabitsRecyclerViewAdapter() {
         habitsRecyclerViewAdapter =
             HabitsRecyclerViewAdapter { habit, _ ->
-                val actualPosition = viewModel.getPosition(habit)
-                onItemClickedListener.onItemClicked(habit, actualPosition)
+                onItemClickedListener.onItemClicked(habit)
             }
         habitsRecyclerViewLayoutManager = LinearLayoutManager(this.context)
 
