@@ -2,32 +2,28 @@ package com.example.habittracker.model
 
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
+import com.example.habittracker.db.HabitsDatabase
 
 object Model {
     private val goodHabits = arrayListOf<Habit>()
     private val badHabits = arrayListOf<Habit>()
 
+    private lateinit var database: HabitsDatabase
+
+    fun addDatabase(database: HabitsDatabase) {
+        this.database = database
+    }
+
     fun addHabit(habit: Habit) {
-        getHabits(habit.habitType).add(habit)
+        database.habitsDao().insertHabit(habit)
     }
 
     fun replaceHabit(position: Int, oldHabit: Habit, newHabit: Habit) {
-        if (oldHabit.habitType != newHabit.habitType) {
-            getHabits(oldHabit.habitType).removeAt(position)
-            addHabit(newHabit)
-        } else {
-            getHabits(newHabit.habitType)[position] = newHabit
-        }
+        newHabit.id = oldHabit.id
+        database.habitsDao().updateHabit(newHabit)
     }
 
     fun getImmutableHabits(habitType: HabitType): List<Habit> = getHabits(habitType)
 
-//    fun getSortedByPriorityHabits(habitType: HabitType, descending: Boolean = true): List<Habit> {
-//        return getHabits(habitType).sortBy { habit -> habit.habitType }
-//    }
-
-    private fun getHabits(habitType: HabitType) = when (habitType) {
-        HabitType.Good -> goodHabits
-        HabitType.Bad -> badHabits
-    }
+    private fun getHabits(habitType: HabitType) = database.habitsDao().getHabitsByType(habitType)
 }
