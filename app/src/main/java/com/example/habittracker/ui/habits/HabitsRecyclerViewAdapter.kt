@@ -2,6 +2,7 @@ package com.example.habittracker.ui.habits
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.R
 import com.example.habittracker.data.Habit
@@ -15,8 +16,10 @@ class HabitsRecyclerViewAdapter(
     private var habits = listOf<Habit>()
 
     fun updateHabits(newHabits: List<Habit>) {
+        val habitDiffCallback = HabitDiffCallback(habits, newHabits)
+        val diffResult = DiffUtil.calculateDiff(habitDiffCallback)
         habits = newHabits
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
