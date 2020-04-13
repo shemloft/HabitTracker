@@ -1,7 +1,6 @@
 package com.example.habittracker.ui.bottomsheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,8 @@ class BottomSheetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.onSortStatusChange(SortStatus.NONE)
+        viewModel.onTextChanged("")
 
         buttonToggleGroup.addOnButtonCheckedListener { group, _, _ ->
             val sortStatus = when (group.checkedButtonId) {

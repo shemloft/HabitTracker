@@ -1,8 +1,8 @@
 package com.example.habittracker.model
 
-import androidx.lifecycle.LiveData
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
+import com.example.habittracker.data.SortStatus
 import com.example.habittracker.db.HabitsDatabase
 
 object Model {
@@ -21,6 +21,19 @@ object Model {
         database.habitsDao().updateHabit(newHabit)
     }
 
-    fun getHabits(habitType: HabitType): LiveData<List<Habit>> =
-            database.habitsDao().getHabitsByType(habitType)
+    fun getSelectedHabits(habitType: HabitType, sortStatus: SortStatus, textFilter: String) =
+        when (sortStatus) {
+            SortStatus.UP -> database.habitsDao().getSelectedHabitsOrderedByAscending(
+                habitType,
+                textFilter
+            )
+            SortStatus.DOWN -> database.habitsDao().getSelectedHabitsOrderedByDescending(
+                habitType,
+                textFilter
+            )
+            SortStatus.NONE -> database.habitsDao().getSelectedHabitsUnordered(
+                habitType,
+                textFilter
+            )
+        }
 }

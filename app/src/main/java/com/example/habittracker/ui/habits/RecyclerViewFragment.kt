@@ -2,7 +2,6 @@ package com.example.habittracker.ui.habits
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.R
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
-import com.example.habittracker.data.SortStatus
 import com.example.habittracker.viewmodel.HabitsViewModel
 import kotlinx.android.synthetic.main.recycler_view.*
 
@@ -65,20 +63,7 @@ class RecyclerViewFragment : Fragment() {
         }
 
         observable.observe(viewLifecycleOwner,
-            Observer { _ ->
-                habitsRecyclerViewAdapter.updateHabits(viewModel.getUpdatedHabits(habitType))
-            })
-
-        viewModel.sortStatus.observe(viewLifecycleOwner,
-            Observer { _ ->
-                habitsRecyclerViewAdapter.updateHabits(viewModel.getUpdatedHabits(habitType))
-            }
-        )
-
-        viewModel.filterText.observe(viewLifecycleOwner,
-            Observer { _ ->
-                habitsRecyclerViewAdapter.updateHabits(viewModel.getUpdatedHabits(habitType))
-            })
+            Observer { habits -> habitsRecyclerViewAdapter.updateHabits(habits) })
 
         initializeHabitsRecyclerViewAdapter()
     }
