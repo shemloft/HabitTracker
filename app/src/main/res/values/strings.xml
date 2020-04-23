@@ -35,10 +35,9 @@
         <item quantity="few">%1$d дня</item>
         <item quantity="other">%1$d дней</item>
     </plurals>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_to_cloud_label">сохранить в облако</string>
     <string name="load_from_cloud_label">загрузить из облака</string>
     <string name="cloud_screen_name">Импорт и экспорт</string>
+    <string name="token">06997801-d80d-4b9b-8dcf-5b3790bb31b7</string>
 </resources>

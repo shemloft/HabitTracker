@@ -6,6 +6,9 @@ import com.example.habittracker.data.*
 
 @Dao
 interface HabitsDao {
+    @Query("SELECT * FROM habit")
+    fun getAllHabits(): List<Habit>
+
     @Query("SELECT * FROM habit WHERE habitType == :habitType AND name LIKE '%' || :textFilter || '%'")
     fun getSelectedHabitsUnordered(
         @TypeConverters(HabitTypeConverter::class) habitType: HabitType,
@@ -24,8 +27,14 @@ interface HabitsDao {
         textFilter: String
     ): LiveData<List<Habit>>
 
+    @Query("DELETE FROM habit")
+    fun deleteAllHabits()
+
     @Insert
     fun insertHabit(habit: Habit)
+
+    @Insert
+    fun insertHabits(habits: List<Habit>)
 
     @Update
     fun updateHabit(habit: Habit)

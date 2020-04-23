@@ -11,6 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
+import com.example.habittracker.cloud.CloudRepository
 import com.example.habittracker.data.Habit
 import com.example.habittracker.db.HabitsDatabase
 import com.example.habittracker.infrastructure.hideKeyboard
@@ -56,6 +57,8 @@ class MainActivity :
                     .build()
             Model.addDatabase(db)
         }
+
+        CloudRepository.addContext(this)
     }
 
     override fun onSupportNavigateUp() =

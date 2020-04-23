@@ -18,7 +18,7 @@ class HabitJsonDeserializer : JsonDeserializer<Habit> {
         json.asJsonObject.get("count").asInt,
         json.asJsonObject.get("frequency").asInt
     ).apply {
-        this.date = json.asJsonObject.get("date").asInt
+        this.date = json.asJsonObject.get("date").asLong
         this.uid = json.asJsonObject.get("uid").asString
     }
 }

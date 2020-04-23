@@ -19,7 +19,8 @@ class HabitJsonSerializer : JsonSerializer<Habit> {
         addProperty("priority", PriorityConverter().fromPriority(src.priority))
         addProperty("title", src.name)
         addProperty("type", HabitTypeConverter().fromHabitType(src.habitType))
-        addProperty("uid", src.uid)
+        if (src.uid != null)
+            addProperty("uid", src.uid)
     }
 
 }

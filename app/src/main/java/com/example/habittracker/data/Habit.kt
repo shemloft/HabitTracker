@@ -25,6 +25,6 @@ data class Habit(
     @IgnoredOnParcel
     var uid: String? = null
     @IgnoredOnParcel
-    var date: Int? = null
+    var date: Long? = null
 }
 

@@ -4,6 +4,7 @@ import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
 import com.example.habittracker.data.SortStatus
 import com.example.habittracker.db.HabitsDatabase
+import java.util.*
 
 object Model {
     private lateinit var database: HabitsDatabase
@@ -12,13 +13,29 @@ object Model {
         this.database = database
     }
 
+    fun getAllHabits(): List<Habit> =
+        database.habitsDao().getAllHabits()
+
+
     fun addHabit(habit: Habit) {
+        habit.date = Date().time
         database.habitsDao().insertHabit(habit)
+    }
+
+    fun replaceAllHabits(habits: List<Habit>) {
+        database.habitsDao().deleteAllHabits()
+        database.habitsDao().insertHabits(habits)
     }
 
     fun replaceHabit(oldHabit: Habit, newHabit: Habit) {
         newHabit.id = oldHabit.id
-        database.habitsDao().updateHabit(newHabit)
+        newHabit.uid = oldHabit.uid
+        newHabit.date = Date().time
+        updateHabit(newHabit)
+    }
+
+    fun updateHabit(habit: Habit) {
+        database.habitsDao().updateHabit(habit)
     }
 
     fun getSelectedHabits(habitType: HabitType, sortStatus: SortStatus, textFilter: String) =
