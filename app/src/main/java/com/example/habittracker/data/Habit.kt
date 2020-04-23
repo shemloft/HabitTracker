@@ -22,5 +22,9 @@ data class Habit(
     @PrimaryKey(autoGenerate = true)
     @IgnoredOnParcel
     var id: Int? = null
+    @IgnoredOnParcel
+    var uid: String? = null
+    @IgnoredOnParcel
+    var date: Int? = null
 }
 
