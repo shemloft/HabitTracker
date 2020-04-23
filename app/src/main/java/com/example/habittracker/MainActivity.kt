@@ -39,7 +39,7 @@ class MainActivity :
 
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.habitsViewFragment, R.id.appInfoFragment),
+            setOf(R.id.habitsViewFragment, R.id.cloudFragment, R.id.appInfoFragment),
             drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
