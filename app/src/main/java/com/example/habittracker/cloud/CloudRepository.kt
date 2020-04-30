@@ -2,9 +2,7 @@ package com.example.habittracker.cloud
 
 import android.content.Context
 import com.example.habittracker.R
-import com.example.habittracker.data.Habit
-import com.example.habittracker.data.HabitJsonDeserializer
-import com.example.habittracker.data.HabitJsonSerializer
+import com.example.habittracker.data.*
 import com.example.habittracker.model.Model
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
@@ -14,6 +12,8 @@ object CloudRepository {
     private val gson = GsonBuilder()
         .registerTypeAdapter(Habit::class.java, HabitJsonSerializer())
         .registerTypeAdapter(Habit::class.java, HabitJsonDeserializer())
+        .registerTypeAdapter(UidDto::class.java, UidDtoSerializer())
+        .registerTypeAdapter(UidDto::class.java, UidDtoDeserializer())
         .create()
 
     private val retrofit = Retrofit.Builder()
@@ -29,16 +29,17 @@ object CloudRepository {
         this.context = context
     }
 
+    suspend fun addHabit(habit: Habit) {
+        val token = context.getString(R.string.token);
+        service.putHabit(token, habit)
+    }
+
     suspend fun saveDatabase() {
         val token = context.getString(R.string.token)
         Model.getAllHabits().forEach { habit ->
-            val response = service.putHabit(token, habit)
-            val body = response.body()
-            if (response.isSuccessful && body != null) {
-                val uid = body.get("uid").asString
-                habit.uid = uid
-                Model.updateHabit(habit)
-            }
+            val uidDto = service.putHabit(token, habit)
+            habit.uid = uidDto.uid
+            Model.updateHabit(habit)
         }
     }
 
