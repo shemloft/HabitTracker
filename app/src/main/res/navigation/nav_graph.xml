@@ -21,8 +21,4 @@
         android:name="com.example.habittracker.ui.info.AppInfoFragment"
         tools:layout="@layout/info"/>
 
-    <fragment
-        android:id="@+id/cloudFragment"
-        android:name="com.example.habittracker.ui.cloud.CloudHandlerFragment"/>
-
 </navigation>

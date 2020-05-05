@@ -2,6 +2,7 @@ package com.example.habittracker.cloud
 
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.UidDto
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header

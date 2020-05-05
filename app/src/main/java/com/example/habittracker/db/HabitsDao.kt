@@ -30,13 +30,19 @@ interface HabitsDao {
     @Query("DELETE FROM habit")
     fun deleteAllHabits()
 
+    @Delete
+    fun deleteHabit(habit: Habit)
+
     @Insert
-    fun insertHabit(habit: Habit)
+    fun insertHabit(habit: Habit): Long
 
     @Insert
     fun insertHabits(habits: List<Habit>)
 
     @Update
     fun updateHabit(habit: Habit)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun updateHabits(habits: List<Habit>)
 
 }

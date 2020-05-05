@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_home"
             android:title="@string/home_screen_name" />
         <item
-            android:id="@id/cloudFragment"
-            android:icon="@drawable/ic_cloud"
-            android:title="@string/cloud_screen_name"/>
-        <item
             android:id="@id/appInfoFragment"
             android:icon="@drawable/ic_info"
             android:title="@string/info_screen_name" />

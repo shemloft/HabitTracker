@@ -29,23 +29,19 @@ object CloudRepository {
         this.context = context
     }
 
-    suspend fun addHabit(habit: Habit) {
-        val token = context.getString(R.string.token);
+    suspend fun addHabit(habit: Habit): String {
+        val token = context.getString(R.string.token)
+        val uidDto = service.putHabit(token, habit)
+        return uidDto.uid
+    }
+
+    suspend fun updateHabit(habit: Habit) {
+        val token = context.getString(R.string.token)
         service.putHabit(token, habit)
     }
 
-    suspend fun saveDatabase() {
+    suspend fun getHabits(): List<Habit> {
         val token = context.getString(R.string.token)
-        Model.getAllHabits().forEach { habit ->
-            val uidDto = service.putHabit(token, habit)
-            habit.uid = uidDto.uid
-            Model.updateHabit(habit)
-        }
-    }
-
-    suspend fun loadDatabase() {
-        val token = context.getString(R.string.token)
-        val habits = service.getHabits(token)
-        Model.replaceAllHabits(habits)
+        return service.getHabits(token)
     }
 }

@@ -1,5 +1,7 @@
 package com.example.habittracker.model
 
+import android.util.Log
+import com.example.habittracker.cloud.CloudRepository
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitType
 import com.example.habittracker.data.SortStatus
@@ -13,28 +15,26 @@ object Model {
         this.database = database
     }
 
-    fun getAllHabits(): List<Habit> =
-        database.habitsDao().getAllHabits()
+    suspend fun updateDatabaseFromServer() {
+        val habits = CloudRepository.getHabits()
+        database.habitsDao().updateHabits(habits)
+    }
 
-
-    fun addHabit(habit: Habit) {
+    suspend fun addHabit(habit: Habit) {
         habit.date = Date().time
+        val uid = CloudRepository.addHabit(habit)
+        habit.uid = uid
         database.habitsDao().insertHabit(habit)
     }
 
-    fun replaceAllHabits(habits: List<Habit>) {
-        database.habitsDao().deleteAllHabits()
-        database.habitsDao().insertHabits(habits)
-    }
-
-    fun replaceHabit(oldHabit: Habit, newHabit: Habit) {
-        newHabit.id = oldHabit.id
+    suspend fun replaceHabit(oldHabit: Habit, newHabit: Habit) {
         newHabit.uid = oldHabit.uid
         newHabit.date = Date().time
+        CloudRepository.updateHabit(newHabit)
         updateHabit(newHabit)
     }
 
-    fun updateHabit(habit: Habit) {
+    private fun updateHabit(habit: Habit) {
         database.habitsDao().updateHabit(habit)
     }
 
@@ -53,4 +53,6 @@ object Model {
                 textFilter
             )
         }
+
+
 }

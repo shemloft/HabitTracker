@@ -1,14 +1,14 @@
 package com.example.habittracker.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.HabitSelectionParameters
 import com.example.habittracker.data.HabitType
 import com.example.habittracker.data.SortStatus
 import com.example.habittracker.model.Model
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HabitsViewModel : ViewModel() {
     private val habitSelectionParameters: MutableLiveData<HabitSelectionParameters> =
@@ -25,6 +25,12 @@ class HabitsViewModel : ViewModel() {
 
     init {
         habitSelectionParameters.value = HabitSelectionParameters(SortStatus.NONE, "")
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                Model.updateDatabaseFromServer()
+            }
+        }
     }
 
     fun onSortStatusChange(sortStatus: SortStatus) {

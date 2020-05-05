@@ -19,11 +19,9 @@ data class Habit(
     val habitCount: Int,
     val habitFrequency: Int
 ) : Serializable, Parcelable {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @IgnoredOnParcel
-    var id: Int? = null
-    @IgnoredOnParcel
-    var uid: String? = null
+    var uid: String = ""
     @IgnoredOnParcel
     var date: Long? = null
 }

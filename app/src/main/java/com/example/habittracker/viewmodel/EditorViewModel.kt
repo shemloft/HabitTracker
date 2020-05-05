@@ -1,6 +1,7 @@
 package com.example.habittracker.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.habittracker.cloud.CloudRepository
 import com.example.habittracker.data.Habit
 import com.example.habittracker.model.Model
 import kotlinx.coroutines.*
@@ -19,8 +20,12 @@ class EditorViewModel : ViewModel(), CoroutineScope {
 
     fun onFormFilled(habit: Habit, oldHabit: Habit?) = launch {
         if (oldHabit == null)
-            withContext(Dispatchers.IO) { Model.addHabit(habit) }
+            withContext(Dispatchers.IO) {
+                Model.addHabit(habit)
+            }
         else
-            withContext(Dispatchers.IO) { Model.replaceHabit(oldHabit, habit) }
+            withContext(Dispatchers.IO) {
+                Model.replaceHabit(oldHabit, habit)
+            }
     }
 }
